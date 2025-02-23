@@ -25,5 +25,7 @@ public class bullet : MonoBehaviour
         var damage = Random.Range(damageRange.x, damageRange.y);
         dmgIndicator.instance.DisplayDamage((int)damage, transform.position);
         Destroy(gameObject);
+        var zombie = other.gameObject.GetComponent<ZOmbie>();
+        if (zombie !=null) zombie.GetHurt();
     }
 }

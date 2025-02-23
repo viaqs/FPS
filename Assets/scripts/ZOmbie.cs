@@ -22,6 +22,9 @@ public class ZOmbie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Animator.SetFloat("speed", agent.velocity.magnitude);
+
+
         var dinstance = Vector3.Distance(transform.position, target.position);
        if (dinstance >= runDistance)
         {
@@ -29,9 +32,23 @@ public class ZOmbie : MonoBehaviour
         }
         else agent.speed = walkSpeed; 
         Animator.SetBool("isRunning",dinstance >= runDistance);
-            if (target != null) { 
+            if (target != null && agent.enabled) { 
           agent.SetDestination(target.position);
 
             }
     }
+
+    public void GetHurt()
+    {
+        Animator.Play("Pain Gesture");
+        StartCoroutine(StopAndWait());
+    }
+
+    IEnumerator StopAndWait()
+    {
+        agent.enabled = false;
+        yield return new WaitForSeconds(2);
+        agent.enabled = true;
+    }
+
 }
